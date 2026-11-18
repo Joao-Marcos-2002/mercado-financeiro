@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Mercado Financeiro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <div>
+        <span class="tag">MERCADO FINANCEIRO</span>
+        <h1>Indicadores Macroeconômicos e Tesouro Direto</h1>
+        <p>Dashboard dos resultados produzidos</p>
+    </div>
+    <div class="header-status" id="status">Carregando...</div>
+</header>
+
+<nav class="menu">
+    <a href="#visao-geral">Visão geral</a>
+    <a href="#titulos">Títulos</a>
+    <a href="#correlacoes">Correlações</a>
+    <a href="#eventos">Selic</a>
+    <a href="#dados">Dados</a>
+</nav>
+
+<main class="container">
+
+    <section id="visao-geral">
+        <div class="section-heading">
+            <div>
+                <span class="section-number">01</span>
+                <div>
+                    <h2>Visão geral</h2>
+                    <p>Últimos indicadores disponíveis no painel mensal.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cards">
+            <article class="metric-card">
+                <span>Selic</span>
+                <strong id="selic">--</strong>
+                <small id="mes-selic">--</small>
+            </article>
+            <article class="metric-card">
+                <span>IPCA mensal</span>
+                <strong id="ipca">--</strong>
+                <small id="mes-ipca">--</small>
+            </article>
+            <article class="metric-card">
+                <span>Taxa de desocupação (%)</span>
+                <strong id="desocupacao">--</strong>
+                <small id="mes-desocupacao">--</small>
+            </article>
+            <article class="metric-card">
+                <span>Prefixado 2029</span>
+                <strong id="prefixado">--</strong>
+                <small id="mes-prefixado">taxa</small>
+            </article>
+        </div>
+
+        <div class="panel">
+            <div class="panel-title">
+                <div>
+                    <h3>Indicadores macroeconômicos</h3>
+                    <p>Selic, IPCA mensal e taxa de desocupação.</p>
+                </div>
+                <select id="macroSelect">
+                    <option value="selic">Selic</option>
+                    <option value="ipca">IPCA mensal</option>
+                    <option value="desocupacao">Desocupação</option>
+                </select>
+            </div>
+            <div class="chart-area">
+                <canvas id="macroChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section id="titulos">
+        <div class="section-heading">
+            <div>
+                <span class="section-number">02</span>
+                <div>
+                    <h2>Títulos do Tesouro</h2>
+                    <p>Evolução das taxas dos quatro títulos utilizados na análise.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="title-tabs" id="titleTabs">
+            <button class="active" data-title="selic2029">Tesouro Selic 2029</button>
+            <button data-title="prefixado2029">Tesouro Prefixado 2029</button>
+            <button data-title="ipca2029">Tesouro IPCA+ 2029</button>
+            <button data-title="ipca2035">Tesouro IPCA+ 2035</button>
+        </div>
+
+        <div class="panel title-panel">
+            <div class="title-summary">
+                <div>
+                    <span class="label">Título selecionado</span>
+                    <h3 id="titleName">Tesouro Selic 2029</h3>
+                    <p id="titleDescription">Evolução mensal da taxa observada no painel.</p>
+                </div>
+                <div class="big-number">
+                    <span>Última taxa</span>
+                    <strong id="titleLastRate">--</strong>
+                </div>
+            </div>
+
+            <div class="chart-area large">
+                <canvas id="titleChart"></canvas>
+            </div>
+        </div>
+
+        <div class="two-columns">
+            <div class="panel">
+                <div class="panel-title">
+                    <div>
+                        <h3>Comparação entre títulos</h3>
+                        <p>Taxas no último mês disponível.</p>
+                    </div>
+                </div>
+                <div class="chart-area small">
+                    <canvas id="comparisonChart"></canvas>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">
+                    <div>
+                        <h3>Resumo do último mês</h3>
+                        <p>Taxas dos títulos utilizados no estudo.</p>
+                    </div>
+                </div>
+                <div class="rate-list" id="rateList"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="correlacoes">
+        <div class="section-heading">
+            <div>
+                <span class="section-number">03</span>
+                <div>
+                    <h2>Correlações e defasagens</h2>
+                    <p>Relações entre as variações dos preços dos títulos e os indicadores macroeconômicos.</p>
+                </div>
+            </div>
+        </div>
+
+        <section class="lag-info">
+            <h3>Defasagem (Lag)</h3>
+
+            <p class="lag-description">
+                Indica quantos meses separam o indicador econômico do comportamento do título.
+            </p>
+
+            <div class="lag-grid">
+                <div class="lag-item">
+                    <strong>Lag 0:</strong>
+                    <span>Mesmo mês</span>
+                </div>
+
+                <div class="lag-item">
+                    <strong>Lag 1:</strong>
+                    <span>1 mês depois</span>
+                </div>
+
+                <div class="lag-item">
+                    <strong>Lag 2:</strong>
+                    <span>2 meses depois</span>
+                </div>
+
+                <div class="lag-item">
+                    <strong>Lag 3:</strong>
+                    <span>3 meses depois</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="two-columns correlation-top">
+            <div class="panel">
+                <div class="panel-title">
+                    <div>
+                        <h3>Mapa de correlação</h3>
+                        <p>Intensidade de r por título, indicador e defasagem.</p>
+                    </div>
+                    <select id="lagSelect">
+                        <option value="0">Lag 0</option>
+                        <option value="1">Lag 1</option>
+                        <option value="2" selected>Lag 2</option>
+                        <option value="3">Lag 3</option>
+                    </select>
+                </div>
+                <div class="heatmap" id="heatmap"></div>
+                <div class="heat-legend">
+                    <span>negativa</span>
+                    <i></i>
+                    <span>0</span>
+                    <i></i>
+                    <span>positiva</span>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">
+                    <div>
+                        <h3>Maiores correlações</h3>
+                        <p>Ordenadas pelo valor absoluto de r.</p>
+                    </div>
+                </div>
+                <div class="correlation-list" id="topCorrelations"></div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-title">
+                <div>
+                    <h3>Tabela de correlações</h3>
+                    <p>Resultados gerados pelo estudo de defasagens.</p>
+                </div>
+                <select id="correlationTitleSelect">
+                    <option value="todos">Todos os títulos</option>
+                </select>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Título</th>
+                            <th>Indicador</th>
+                            <th>Lag</th>
+                            <th>r (correlação)</th>
+                            <th>Quantidade de observações</th>
+                            <th>Significativa</th>
+                        </tr>
+                    </thead>
+                    <tbody id="correlationTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="method-note">
+            <strong>Nota metodológica:</strong>
+            correlações com amostra pequena devem ser tratadas como indicações, e não como prova de causalidade.
+        </div>
+    </section>
+
+    <section id="eventos">
+        <div class="section-heading">
+            <div>
+                <span class="section-number">04</span>
+                <div>
+                    <h2>Estudo de caso: decisões da Selic</h2>
+                    <p>Comportamento dos títulos na janela de 15 dias antes e depois de cada decisão.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-title">
+                <div>
+                    <h3>Variação do preço unitário</h3>
+                    <p>Comparação das variações observadas após as decisões.</p>
+                </div>
+                <select id="eventSelect">
+                    <option value="todos">Todas as decisões</option>
+                </select>
+            </div>
+            <div class="chart-area">
+                <canvas id="eventChart"></canvas>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Título</th>
+                            <th>Taxa antes</th>
+                            <th>Taxa depois</th>
+                            <th>Var. taxa (p.p.)</th>
+                            <th>Var. PU (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eventTable"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="dados">
+        <div class="section-heading">
+            <div>
+                <span class="section-number">05</span>
+                <div>
+                    <h2>Dados mensais</h2>
+                    <p>Base consolidada utilizada no painel.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mês</th>
+                            <th>Selic</th>
+                            <th>IPCA m/m</th>
+                            <th>Desocupação</th>
+                            <th>Selic 2029</th>
+                            <th>Prefixado 2029</th>
+                            <th>IPCA+ 2029</th>
+                            <th>IPCA+ 2035</th>
+                        </tr>
+                    </thead>
+                    <tbody id="monthlyTable"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>Análise do mercado financeiro</strong></p>
+</footer>
+
+<script>
+const state = {
+    monthly: [],
+    correlations: [],
+    events: [],
+    selectedTitle: "selic2029"
+};
+
+const titleConfig = {
+    selic2029: {
+        name: "Tesouro Selic 2029",
+        field: "taxa_Selic 2029",
+        aliases: ["taxa_selic 2029", "taxa_selic_2029", "selic 2029"]
+    },
+    prefixado2029: {
+        name: "Tesouro Prefixado 2029",
+        field: "taxa_Prefixado 2029",
+        aliases: ["taxa_prefixado 2029", "taxa_prefixado_2029", "prefixado 2029"]
+    },
+    ipca2029: {
+        name: "Tesouro IPCA+ 2029",
+        field: "taxa_IPCA+ 2029",
+        aliases: ["taxa_ipca+ 2029", "taxa_ipca+_2029", "ipca+ 2029"]
+    },
+    ipca2035: {
+        name: "Tesouro IPCA+ 2035",
+        field: "taxa_IPCA+ 2035",
+        aliases: ["taxa_ipca+ 2035", "taxa_ipca+_2035", "ipca+ 2035"]
+    }
+};
+
+const colors = {
+    blue: "#174a73",
+    lightBlue: "#3b82c4",
+    green: "#16866b",
+    orange: "#c77a12",
+    red: "#b84b4b",
+    purple: "#7355a6"
+};
+
+function normalizeKey(key) {
+    return String(key)
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[%]/g, "")
+        .replace(/_/g, "")
+        .replace(/\s+/g, "");
+}
+
+function findValue(obj, names) {
+    const keys = Object.keys(obj);
+    const normalized = keys.map(k => [k, normalizeKey(k)]);
+
+    for (const wanted of names) {
+        const w = normalizeKey(wanted);
+        const exact = normalized.find(([original, n]) => n === w);
+        if (exact) return exact[0] ? obj[exact[0]] : "";
+    }
+
+    for (const wanted of names) {
+        const w = normalizeKey(wanted);
+        const partial = normalized.find(([original, n]) => n.includes(w));
+        if (partial) return obj[partial[0]];
+    }
+
+    return "";
+}
+
+function number(value) {
+    if (value === undefined || value === null || value === "") return null;
+    let text = String(value).trim();
+
+    if (text.includes(",") && text.includes(".")) {
+        if (text.lastIndexOf(",") > text.lastIndexOf(".")) {
+            text = text.replace(/\./g, "").replace(",", ".");
+        } else {
+            text = text.replace(/,/g, "");
+        }
+    } else {
+        text = text.replace(",", ".");
+    }
+
+    const n = Number(text);
+    return Number.isFinite(n) ? n : null;
+}
+
+function formatNumber(value, digits = 2) {
+    const n = number(value);
+    if (n === null) return "--";
+    return n.toLocaleString("pt-BR", {
+        minimumFractionDigits: digits,
+        maximumFractionDigits: digits
+    });
+}
+
+function formatPercent(value, digits = 2) {
+    const n = number(value);
+    return n === null ? "--" : `${formatNumber(n, digits)}%`;
+}
+
+function parseCSV(text) {
+    text = text.replace(/^\uFEFF/, "");
+    const lines = text.trim().split(/\r?\n/);
+    if (!lines.length) return [];
+
+    const delimiter = lines[0].includes(";") ? ";" : ",";
+    const headers = lines[0].split(delimiter).map(v => v.trim().replace(/^"|"$/g, ""));
+
+    return lines.slice(1).filter(Boolean).map(line => {
+        const values = line.split(delimiter);
+        const obj = {};
+        headers.forEach((header, index) => {
+            obj[header] = (values[index] ?? "").trim().replace(/^"|"$/g, "");
+        });
+        return obj;
+    });
+}
+
+async function loadCSV(path) {
+    const response = await fetch(path);
+    if (!response.ok) throw new Error(`Erro ao carregar ${path}`);
+    return parseCSV(await response.text());
+}
+
+function monthValue(row) {
+    return findValue(row, ["mes", "data", "date", "periodo"]);
+}
+
+function drawLineChart(canvasId, series, labels, options = {}) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const width = Math.max(rect.width, 500);
+    const height = Math.max(rect.height, 280);
+    const dpr = window.devicePixelRatio || 1;
+
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+
+    const ctx = canvas.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, width, height);
+
+    const pad = { top: 40, right: 25, bottom: 48, left: 55 };
+    const chartW = width - pad.left - pad.right;
+    const chartH = height - pad.top - pad.bottom;
+
+    const values = series.flatMap(s => s.values).filter(v => v !== null);
+    if (!values.length) return;
+
+    let min = Math.min(...values);
+    let max = Math.max(...values);
+    const gap = (max - min || 1) * 0.12;
+    min -= gap;
+    max += gap;
+
+    const x = i => pad.left + (i / Math.max(labels.length - 1, 1)) * chartW;
+    const y = value => pad.top + (1 - (value - min) / (max - min)) * chartH;
+
+    ctx.font = "11px Arial";
+    ctx.strokeStyle = "#e6e9ed";
+    ctx.fillStyle = "#707780";
+    ctx.lineWidth = 1;
+
+    for (let i = 0; i <= 4; i++) {
+        const yy = pad.top + (i / 4) * chartH;
+        ctx.beginPath();
+        ctx.moveTo(pad.left, yy);
+        ctx.lineTo(width - pad.right, yy);
+        ctx.stroke();
+
+        const tick = max - (i / 4) * (max - min);
+        ctx.fillText(tick.toFixed(1), 8, yy + 4);
+    }
+
+    labels.forEach((label, i) => {
+        if (i % Math.max(1, Math.ceil(labels.length / 6)) === 0) {
+            ctx.fillText(String(label).slice(0, 7), x(i) - 18, height - 17);
+        }
+    });
+
+    series.forEach((serie, index) => {
+        ctx.beginPath();
+        let started = false;
+
+        serie.values.forEach((value, i) => {
+            if (value === null) return;
+            if (!started) {
+                ctx.moveTo(x(i), y(value));
+                started = true;
+            } else {
+                ctx.lineTo(x(i), y(value));
+            }
+        });
+
+        ctx.strokeStyle = serie.color || [colors.blue, colors.lightBlue, colors.green, colors.orange, colors.purple][index % 5];
+        ctx.lineWidth = 2.4;
+        ctx.stroke();
+
+        serie.values.forEach((value, i) => {
+            if (value === null) return;
+            ctx.beginPath();
+            ctx.arc(x(i), y(value), 3, 0, Math.PI * 2);
+            ctx.fillStyle = serie.color || colors.blue;
+            ctx.fill();
+        });
+    });
+
+    let legendX = pad.left;
+    series.forEach((serie, index) => {
+        const color = serie.color || [colors.blue, colors.lightBlue, colors.green, colors.orange, colors.purple][index % 5];
+        ctx.fillStyle = color;
+        ctx.fillRect(legendX, 12, 10, 10);
+        ctx.fillStyle = "#4b5563";
+        ctx.font = "12px Arial";
+        ctx.fillText(serie.name, legendX + 15, 21);
+        legendX += ctx.measureText(serie.name).width + 40;
+    });
+}
+
+function drawBarChart(canvasId, items) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const width = Math.max(rect.width, 500);
+    const height = Math.max(rect.height, 260);
+    const dpr = window.devicePixelRatio || 1;
+
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+
+    const ctx = canvas.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, width, height);
+
+    if (!items.length) return;
+
+    const pad = { top: 25, right: 25, bottom: 65, left: 55 };
+    const chartW = width - pad.left - pad.right;
+    const chartH = height - pad.top - pad.bottom;
+    const max = Math.max(...items.map(x => Math.abs(x.value)), 0.01);
+    const slot = chartW / items.length;
+    const barW = Math.min(70, slot * 0.58);
+
+    ctx.strokeStyle = "#e6e9ed";
+    ctx.fillStyle = "#6b7280";
+    ctx.font = "11px Arial";
+
+    for (let i = 0; i <= 4; i++) {
+        const yy = pad.top + (i / 4) * chartH;
+        ctx.beginPath();
+        ctx.moveTo(pad.left, yy);
+        ctx.lineTo(width - pad.right, yy);
+        ctx.stroke();
+
+        const tick = max - (i / 4) * max;
+        ctx.fillText(tick.toFixed(1), 12, yy + 4);
+    }
+
+    items.forEach((item, i) => {
+        const barH = Math.abs(item.value) / max * chartH;
+        const bx = pad.left + i * slot + (slot - barW) / 2;
+        const by = pad.top + chartH - barH;
+
+        ctx.fillStyle = item.value >= 0 ? colors.blue : colors.red;
+        ctx.fillRect(bx, by, barW, barH);
+
+        ctx.fillStyle = "#374151";
+        ctx.textAlign = "center";
+        ctx.fillText(item.value.toFixed(2) + "%", bx + barW / 2, Math.max(16, by - 7));
+        ctx.fillText(item.label, bx + barW / 2, height - 30);
+    });
+
+    ctx.textAlign = "left";
+}
+
+function renderMacroChart() {
+    const mode = document.getElementById("macroSelect").value;
+    const labels = state.monthly.map(monthValue);
+
+    const configs = {
+        selic: ["Selic", "selic_fim", colors.blue],
+        ipca: ["IPCA mensal", "ipca_mm", colors.green],
+        desocupacao: ["Desocupação", "desocupacao", colors.orange]
+    };
+
+    const [name, field, color] = configs[mode];
+
+    drawLineChart("macroChart", [{
+        name,
+        color,
+        values: state.monthly.map(row => number(findValue(row, [field, name])))
+    }], labels);
+}
+
+function renderTitleChart() {
+    const config = titleConfig[state.selectedTitle];
+    const labels = state.monthly.map(monthValue);
+
+    document.getElementById("titleName").textContent = config.name;
+    document.getElementById("titleDescription").textContent =
+        `Evolução mensal da taxa do ${config.name.toLowerCase()}.`;
+
+    const values = state.monthly.map(row =>
+        number(findValue(row, [config.field, ...config.aliases]))
+    );
+
+    const last = [...values].reverse().find(v => v !== null);
+    document.getElementById("titleLastRate").textContent =
+        last === undefined ? "--" : formatPercent(last);
+
+    drawLineChart("titleChart", [{
+        name: config.name,
+        color: colors.blue,
+        values
+    }], labels);
+}
+
+function renderComparison() {
+    const last = state.monthly[state.monthly.length - 1];
+    if (!last) return;
+
+    const configs = [
+        ["Selic 2029", titleConfig.selic2029],
+        ["Prefixado 2029", titleConfig.prefixado2029],
+        ["IPCA+ 2029", titleConfig.ipca2029],
+        ["IPCA+ 2035", titleConfig.ipca2035]
+    ];
+
+    const items = configs.map(([label, config]) => ({
+        label,
+        value: number(findValue(last, [config.field, ...config.aliases])) ?? 0
+    }));
+
+    drawBarChart("comparisonChart", items);
+
+    document.getElementById("rateList").innerHTML = items.map(item => `
+        <div class="rate-row">
+            <span>${item.label}</span>
+            <strong>${formatPercent(item.value)}</strong>
+        </div>
+    `).join("");
+}
+
+function renderHeatmap() {
+    const container = document.getElementById("heatmap");
+    const lag = document.getElementById("lagSelect").value;
+
+    const filtered = state.correlations.filter(row =>
+        String(findValue(row, ["lag"])) === lag
+    );
+
+    const titles = [...new Set(filtered.map(row => findValue(row, ["titulo"])).filter(Boolean))];
+    const indicators = [...new Set(filtered.map(row => findValue(row, ["indicador"])).filter(Boolean))];
+
+    if (!titles.length || !indicators.length) {
+        container.innerHTML = `<div class="empty">Não há dados para o lag selecionado.</div>`;
+        return;
+    }
+
+    let html = `<div class="heat-grid" style="--cols:${indicators.length + 1}">
+        <div class="heat-corner"></div>
+        ${indicators.map(ind => `<div class="heat-header" title="${ind}">${shortLabel(ind)}</div>`).join("")}`;
+
+    titles.forEach(title => {
+        html += `<div class="heat-title" title="${title}">${shortLabel(title)}</div>`;
+
+        indicators.forEach(indicator => {
+            const row = filtered.find(r =>
+                findValue(r, ["titulo"]) === title &&
+                findValue(r, ["indicador"]) === indicator
+            );
+
+            const r = row ? number(findValue(row, ["r", "correlacao"])) : null;
+            const intensity = r === null ? 0 : Math.min(Math.abs(r), 1);
+            const background = r === null
+                ? "#f3f4f6"
+                : r >= 0
+                    ? `rgba(37, 99, 235, ${0.12 + intensity * 0.70})`
+                    : `rgba(184, 75, 75, ${0.12 + intensity * 0.70})`;
+
+            html += `
+                <div class="heat-cell" style="background:${background}" title="${title} × ${indicator}: ${r === null ? "--" : r.toFixed(3)}">
+                    ${r === null ? "—" : r.toFixed(2)}
+                </div>`;
+        });
+    });
+
+    html += `</div>`;
+    container.innerHTML = html;
+}
+
+function shortLabel(text) {
+    const value = String(text);
+    if (value.length <= 20) return value;
+    return value.slice(0, 18) + "…";
+}
+
+function renderTopCorrelations() {
+    const container = document.getElementById("topCorrelations");
+
+    const rows = [...state.correlations]
+        .map(row => ({
+            ...row,
+            rNum: number(findValue(row, ["r", "correlacao"])),
+            lag: findValue(row, ["lag"]),
+            title: findValue(row, ["titulo"]),
+            indicator: findValue(row, ["indicador"]),
+            n: findValue(row, ["n"]),
+            sig: findValue(row, ["sig"])
+        }))
+        .filter(row => row.rNum !== null)
+        .sort((a, b) => Math.abs(b.rNum) - Math.abs(a.rNum))
+        .slice(0, 8);
+
+    container.innerHTML = rows.map((row, index) => `
+        <div class="correlation-item">
+            <div class="rank">${index + 1}</div>
+            <div class="corr-info">
+                <strong>${row.title}</strong>
+                <span>${row.indicator} · lag ${row.lag} · n=${row.n}</span>
+            </div>
+            <div class="corr-value ${row.rNum >= 0 ? "positive" : "negative"}">
+                ${row.rNum.toFixed(3)}
+            </div>
+        </div>
+    `).join("");
+}
+
+function renderCorrelationTable() {
+    const tbody = document.getElementById("correlationTable");
+    const titleFilter = document.getElementById("correlationTitleSelect").value;
+
+    const rows = state.correlations
+        .filter(row =>
+            titleFilter === "todos" ||
+            findValue(row, ["titulo"]) === titleFilter
+        )
+        .sort((a, b) =>
+            Math.abs(number(findValue(b, ["r", "correlacao"])) ?? 0) -
+            Math.abs(number(findValue(a, ["r", "correlacao"])) ?? 0)
+        );
+
+    tbody.innerHTML = rows.map(row => {
+        const r = number(findValue(row, ["r", "correlacao"]));
+        const sig = String(findValue(row, ["sig"])).toLowerCase() === "true";
+
+        return `
+            <tr>
+                <td>${findValue(row, ["titulo"]) || "--"}</td>
+                <td>${findValue(row, ["indicador"]) || "--"}</td>
+                <td>${findValue(row, ["lag"]) || "--"}</td>
+                <td class="${r !== null && Math.abs(r) >= .7 ? "highlight" : ""}">
+                    ${r === null ? "--" : r.toFixed(3)}
+                </td>
+                <td>${findValue(row, ["n"]) || "--"}</td>
+                <td><span class="${sig ? "badge yes" : "badge no"}">${sig ? "Sim" : "Não"}</span></td>
+            </tr>`;
+    }).join("");
+}
+
+function renderEvents() {
+    const filter = document.getElementById("eventSelect").value;
+
+    const rows = state.events.filter(row =>
+        filter === "todos" ||
+        findValue(row, ["data_decisao", "data"]) === filter
+    );
+
+    document.getElementById("eventTable").innerHTML = rows.map(row => `
+        <tr>
+            <td>${findValue(row, ["data_decisao", "data"]) || "--"}</td>
+            <td>${findValue(row, ["titulo"]) || "--"}</td>
+            <td>${formatPercent(findValue(row, ["taxa_antes"]))}</td>
+            <td>${formatPercent(findValue(row, ["taxa_depois"]))}</td>
+            <td>${formatNumber(findValue(row, ["var_taxa_pp"]))}</td>
+            <td>${formatPercent(findValue(row, ["var_pu_pct"]))}</td>
+        </tr>
+    `).join("");
+
+    const grouped = {};
+    rows.forEach(row => {
+        const title = findValue(row, ["titulo"]);
+        grouped[title] = number(findValue(row, ["var_pu_pct"])) ?? 0;
+    });
+
+    drawBarChart(
+        "eventChart",
+        Object.entries(grouped).map(([label, value]) => ({ label, value }))
+    );
+}
+
+function populateSelects() {
+    const titleSelect = document.getElementById("correlationTitleSelect");
+    const titles = [...new Set(
+        state.correlations.map(row => findValue(row, ["titulo"])).filter(Boolean)
+    )];
+
+    titles.forEach(title => {
+        const option = document.createElement("option");
+        option.value = title;
+        option.textContent = title;
+        titleSelect.appendChild(option);
+    });
+
+    const eventSelect = document.getElementById("eventSelect");
+    const dates = [...new Set(
+        state.events.map(row => findValue(row, ["data_decisao", "data"])).filter(Boolean)
+    )];
+
+    dates.forEach(date => {
+        const option = document.createElement("option");
+        option.value = date;
+        option.textContent = date;
+        eventSelect.appendChild(option);
+    });
+}
+
+function renderMonthlyTable() {
+    document.getElementById("monthlyTable").innerHTML =
+        state.monthly.map(row => `
+            <tr>
+                <td>${monthValue(row)}</td>
+                <td>${formatPercent(findValue(row, ["selic_fim"]))}</td>
+                <td>${formatPercent(findValue(row, ["ipca_mm"]))}</td>
+                <td>${formatPercent(findValue(row, ["desocupacao"]))}</td>
+                <td>${formatPercent(findValue(row, ["taxa_Selic 2029"]))}</td>
+                <td>${formatPercent(findValue(row, ["taxa_Prefixado 2029"]))}</td>
+                <td>${formatPercent(findValue(row, ["taxa_IPCA+ 2029"]))}</td>
+                <td>${formatPercent(findValue(row, ["taxa_IPCA+ 2035"]))}</td>
+            </tr>
+        `).join("");
+}
+
+function renderCards() {
+    const last = state.monthly[state.monthly.length - 1];
+    if (!last) return;
+
+    const month = monthValue(last);
+
+    document.getElementById("selic").textContent =
+        formatPercent(findValue(last, ["selic_fim"]));
+    document.getElementById("ipca").textContent =
+        formatPercent(findValue(last, ["ipca_mm"]));
+    document.getElementById("desocupacao").textContent =
+        formatPercent(findValue(last, ["desocupacao"]));
+    document.getElementById("prefixado").textContent =
+        formatPercent(findValue(last, ["taxa_Prefixado 2029"]));
+
+    ["selic", "ipca", "desocupacao"].forEach(id => {
+        document.getElementById("mes-" + id).textContent = month;
+    });
+}
+
+async function init() {
+    try {
+        const [monthly, correlations, events] = await Promise.all([
+            loadCSV("../resultados/painel_mensal.csv"),
+            loadCSV("../resultados/correlacoes_defasagens.csv"),
+            loadCSV("../resultados/estudo_caso_selic.csv")
+        ]);
+
+        state.monthly = monthly;
+        state.correlations = correlations;
+        state.events = events;
+
+        renderCards();
+        renderMacroChart();
+        renderTitleChart();
+        renderComparison();
+        renderHeatmap();
+        renderTopCorrelations();
+        populateSelects();
+        renderCorrelationTable();
+        renderEvents();
+        renderMonthlyTable();
+
+        document.getElementById("status").textContent =
+            `${monthly.length} períodos carregados`;
+    } catch (error) {
+        console.error(error);
+        document.getElementById("status").textContent = "Erro ao carregar";
+        document.body.insertAdjacentHTML("afterbegin", `
+            <div class="error-box">
+                <strong>Não foi possível carregar os resultados.</strong>
+                <span>Execute primeiro <code>py analise_dados.py</code> e depois abra o frontend por um servidor local.</span>
+            </div>
+        `);
+    }
+}
+
+document.getElementById("macroSelect").addEventListener("change", renderMacroChart);
+document.getElementById("lagSelect").addEventListener("change", renderHeatmap);
+document.getElementById("lagSelect").addEventListener("change", renderTopCorrelations);
+document.getElementById("correlationTitleSelect").addEventListener("change", renderCorrelationTable);
+document.getElementById("eventSelect").addEventListener("change", renderEvents);
+
+document.querySelectorAll("#titleTabs button").forEach(button => {
+    button.addEventListener("click", () => {
+        document.querySelectorAll("#titleTabs button").forEach(b => b.classList.remove("active"));
+        button.classList.add("active");
+        state.selectedTitle = button.dataset.title;
+        renderTitleChart();
+    });
+});
+
+window.addEventListener("resize", () => {
+    renderMacroChart();
+    renderTitleChart();
+    renderComparison();
+    renderEvents();
+});
+
+init();
+</script>
+
+</body>
+</html>
