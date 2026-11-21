@@ -32,7 +32,7 @@
             <div>
                 <span class="section-number">01</span>
                 <div>
-                    <h2>Visão geral</h2>
+                    <h2 data-help="visao">Visão geral </h2>
                     <p>Últimos indicadores disponíveis no painel mensal.</p>
                 </div>
             </div>
@@ -61,16 +61,43 @@
             </article>
         </div>
 
+        <div class="panel" id="periodsPanel">
+            <div class="panel-title">
+                <div>
+                    <h3 data-help="periodos">Períodos carregados </h3>
+                    <p>Intervalos de tempo cobertos pelos arquivos que o painel leu.</p>
+                </div>
+            </div>
+            <!-- <div class="period-block">
+                <span class="label">Painel mensal</span>
+                <strong id="periodMonthlyRange">--</strong>
+                <div class="chips" id="periodMonthlyChips"></div>
+            </div> -->
+            <!-- <div class="period-block">
+                <span class="label">Decisões da Selic (estudo de caso)</span>
+                <strong id="periodEventsRange">--</strong>
+                <div class="chips" id="periodEventsChips"></div>
+            </div>
+            <div class="period-block">
+                <span class="label">Defasagens analisadas</span>
+                <strong id="periodLags">--</strong>
+            </div> -->
+            <div class="panel" id="periodsPanel">
+                <span id="periodsInfo">Painel mensal --</span>
+            </div>
+        </div>
+
         <div class="panel">
             <div class="panel-title">
                 <div>
-                    <h3>Indicadores macroeconômicos</h3>
+                    <h3 data-help="macro">Indicadores macroeconômicos </h3>
                     <p>Selic, IPCA mensal e taxa de desocupação.</p>
                 </div>
                 <select id="macroSelect">
                     <option value="selic">Selic</option>
                     <option value="ipca">IPCA mensal</option>
                     <option value="desocupacao">Desocupação</option>
+                    <option value="todos">Todos os indicadores</option>
                 </select>
             </div>
             <div class="chart-area">
@@ -84,27 +111,29 @@
             <div>
                 <span class="section-number">02</span>
                 <div>
-                    <h2>Títulos do Tesouro</h2>
+                    <h2 data-help="titulos">Títulos do Tesouro </h2>
                     <p>Evolução das taxas dos quatro títulos utilizados na análise.</p>
                 </div>
             </div>
         </div>
 
         <div class="title-tabs" id="titleTabs">
-            <button class="active" data-title="selic2029">Tesouro Selic 2029</button>
-            <button data-title="prefixado2029">Tesouro Prefixado 2029</button>
-            <button data-title="ipca2029">Tesouro IPCA+ 2029</button>
-            <button data-title="ipca2035">Tesouro IPCA+ 2035</button>
+            <button type="button" class="active" data-title="selic2029" aria-pressed="true"><i class="dot" style="background:#174a73"></i>Tesouro Selic 2029</button>
+            <button type="button" class="active" data-title="prefixado2029" aria-pressed="true"><i class="dot" style="background:#c77a12"></i>Tesouro Prefixado 2029</button>
+            <button type="button" class="active" data-title="ipca2029" aria-pressed="true"><i class="dot" style="background:#16866b"></i>Tesouro IPCA+ 2029</button>
+            <button type="button" class="active" data-title="ipca2035" aria-pressed="true"><i class="dot" style="background:#7355a6"></i>Tesouro IPCA+ 2035</button>
+            <button type="button" class="tab-action active" data-action="all" aria-pressed="true">Comparar todos no mesmo gráfico</button>
+            <button type="button" class="tab-action" data-action="clear">Limpar seleção</button>
         </div>
 
         <div class="panel title-panel">
             <div class="title-summary">
                 <div>
-                    <span class="label">Título selecionado</span>
+                    <span class="label" data-help="tituloSel">Títulos exibidos </span>
                     <h3 id="titleName">Tesouro Selic 2029</h3>
                     <p id="titleDescription">Evolução mensal da taxa observada no painel.</p>
                 </div>
-                <div class="big-number">
+                <div class="big-number" id="titleBigNumber">
                     <span>Última taxa</span>
                     <strong id="titleLastRate">--</strong>
                 </div>
@@ -119,7 +148,7 @@
             <div class="panel">
                 <div class="panel-title">
                     <div>
-                        <h3>Comparação entre títulos</h3>
+                        <h3 data-help="comparacao">Comparação entre títulos </h3>
                         <p>Taxas no último mês disponível.</p>
                     </div>
                 </div>
@@ -131,7 +160,7 @@
             <div class="panel">
                 <div class="panel-title">
                     <div>
-                        <h3>Resumo do último mês</h3>
+                        <h3 data-help="resumo">Resumo do último mês </h3>
                         <p>Taxas dos títulos utilizados no estudo.</p>
                     </div>
                 </div>
@@ -145,72 +174,63 @@
             <div>
                 <span class="section-number">03</span>
                 <div>
-                    <h2>Correlações e defasagens</h2>
+                    <h2 data-help="correlacoes">Correlações e defasagens </h2>
                     <p>Relações entre as variações dos preços dos títulos e os indicadores macroeconômicos.</p>
                 </div>
             </div>
         </div>
-
+        <br>
         <section class="lag-info">
-            <h3>Defasagem (Lag)</h3>
+            <h3 data-help="lag">Defasagem (Lag)</h3>
 
             <p class="lag-description">
-                Indica quantos meses separam o indicador econômico do comportamento do título.
+                Indica quantos meses de atraso o indicador econômico tem em relação ao movimento do título. No lag 2, por exemplo, o indicador de 2 meses antes é comparado com a variação do título no mês.
             </p>
 
             <div class="lag-grid">
                 <div class="lag-item">
                     <strong>Lag 0:</strong>
-                    <span>Mesmo mês</span>
+                    <span>Indicador do mesmo mês</span>
                 </div>
 
                 <div class="lag-item">
                     <strong>Lag 1:</strong>
-                    <span>1 mês depois</span>
+                    <span>Indicador de 1 mês antes</span>
                 </div>
 
                 <div class="lag-item">
                     <strong>Lag 2:</strong>
-                    <span>2 meses depois</span>
+                    <span>Indicador de 2 meses antes</span>
                 </div>
 
                 <div class="lag-item">
                     <strong>Lag 3:</strong>
-                    <span>3 meses depois</span>
+                    <span>Indicador de 3 meses antes</span>
                 </div>
             </div>
         </section>
 
-        <div class="two-columns correlation-top">
-            <div class="panel">
-                <div class="panel-title">
-                    <div>
-                        <h3>Mapa de correlação</h3>
-                        <p>Intensidade de r por título, indicador e defasagem.</p>
-                    </div>
-                    <select id="lagSelect">
-                        <option value="0">Lag 0</option>
-                        <option value="1">Lag 1</option>
-                        <option value="2" selected>Lag 2</option>
-                        <option value="3">Lag 3</option>
-                    </select>
-                </div>
-                <div class="heatmap" id="heatmap"></div>
-                <div class="heat-legend">
-                    <span>negativa</span>
-                    <i></i>
-                    <span>0</span>
-                    <i></i>
-                    <span>positiva</span>
-                </div>
-            </div>
+        <div class="filters" id="correlationFilters">
+            <label>Variável do título
+                <select id="correlationYSelect"></select>
+            </label>
+            <label>Lag (meses)
+                <select id="correlationLagSelect">
+                    <option value="todos">Todos</option>
+                </select>
+            </label>
+        </div>
 
+        <div class="correlation-top">
             <div class="panel">
                 <div class="panel-title">
                     <div>
-                        <h3>Maiores correlações</h3>
+                        <h3 data-help="top">Maiores correlações </h3>
                         <p>Ordenadas pelo valor absoluto de r.</p>
                     </div>
+                    <select id="topTitleSelect" aria-label="Filtrar por título">
+                        <option value="todos">Todos os títulos</option>
+                    </select>
                 </div>
                 <div class="correlation-list" id="topCorrelations"></div>
             </div>
@@ -219,10 +239,10 @@
         <div class="panel">
             <div class="panel-title">
                 <div>
-                    <h3>Tabela de correlações</h3>
+                    <h3 data-help="tabela">Tabela de correlações </h3>
                     <p>Resultados gerados pelo estudo de defasagens.</p>
                 </div>
-                <select id="correlationTitleSelect">
+                <select id="correlationTitleSelect" aria-label="Filtrar por título">
                     <option value="todos">Todos os títulos</option>
                 </select>
             </div>
@@ -233,7 +253,7 @@
                         <tr>
                             <th>Título</th>
                             <th>Indicador</th>
-                            <th>Lag</th>
+                            <th>Lag (meses)</th>
                             <th>r (correlação)</th>
                             <th>Quantidade de observações</th>
                             <th>Significativa</th>
@@ -255,7 +275,7 @@
             <div>
                 <span class="section-number">04</span>
                 <div>
-                    <h2>Estudo de caso: decisões da Selic</h2>
+                    <h2 data-help="eventos">Estudo de caso: decisões da Selic </h2>
                     <p>Comportamento dos títulos na janela de 15 dias antes e depois de cada decisão.</p>
                 </div>
             </div>
@@ -264,12 +284,17 @@
         <div class="panel">
             <div class="panel-title">
                 <div>
-                    <h3>Variação do preço unitário</h3>
-                    <p>Comparação das variações observadas após as decisões.</p>
+                    <h3 data-help="eventosChart">Variação do preço unitário </h3>
+                    <p id="eventSubtitle">Comparação das variações observadas após as decisões.</p>
                 </div>
-                <select id="eventSelect">
-                    <option value="todos">Todas as decisões</option>
-                </select>
+                <div class="select-group">
+                    <select id="eventTitleSelect">
+                        <option value="todos">Todos os títulos</option>
+                    </select>
+                    <select id="eventSelect">
+                        <option value="todos">Todas as decisões</option>
+                    </select>
+                </div>
             </div>
             <div class="chart-area">
                 <canvas id="eventChart"></canvas>
@@ -277,6 +302,15 @@
         </div>
 
         <div class="panel">
+            <div class="panel-title">
+                <div>
+                    <h3 data-help="eventosTabela">Detalhamento por decisão </h3>
+                    <p>Taxas e variações de cada título em cada decisão.</p>
+                </div>
+                <select id="eventTableTitleSelect" aria-label="Filtrar por título">
+                    <option value="todos">Todos os títulos</option>
+                </select>
+            </div>
             <div class="table-wrap">
                 <table>
                     <thead>
@@ -300,7 +334,7 @@
             <div>
                 <span class="section-number">05</span>
                 <div>
-                    <h2>Dados mensais</h2>
+                    <h2 data-help="dados">Dados mensais </h2>
                     <p>Base consolidada utilizada no painel.</p>
                 </div>
             </div>
@@ -330,7 +364,7 @@
 </main>
 
 <footer>
-    <p>Análise do mercado financeiro</strong></p>
+    <p>Análise do mercado financeiro</p>
 </footer>
 
 <script>
@@ -338,7 +372,7 @@ const state = {
     monthly: [],
     correlations: [],
     events: [],
-    selectedTitle: "selic2029"
+    visibleSeries: new Set(["selic2029", "prefixado2029", "ipca2029", "ipca2035"])
 };
 
 const titleConfig = {
@@ -372,6 +406,19 @@ const colors = {
     red: "#b84b4b",
     purple: "#7355a6"
 };
+
+const titleColors = {
+    selic2029: colors.blue,
+    prefixado2029: colors.orange,
+    ipca2029: colors.green,
+    ipca2035: colors.purple
+};
+
+const $ = id => document.getElementById(id);
+
+// Nomes reais das colunas nos CSVs gerados por analise_dados.py
+const lagOf = row => findValue(row, ["defasagem_meses", "defasagem", "lag"]);
+const eventDate = row => findValue(row, ["decisao", "data_decisao", "data"]);
 
 function normalizeKey(key) {
     return String(key)
@@ -483,7 +530,12 @@ function drawLineChart(canvasId, series, labels, options = {}) {
     const chartH = height - pad.top - pad.bottom;
 
     const values = series.flatMap(s => s.values).filter(v => v !== null);
-    if (!values.length) return;
+    if (!values.length) {
+        ctx.fillStyle = "#707780";
+        ctx.font = "13px Arial";
+        ctx.fillText("Selecione ao menos um título para exibir.", pad.left, height / 2);
+        return;
+    }
 
     let min = Math.min(...values);
     let max = Math.max(...values);
@@ -622,36 +674,82 @@ function renderMacroChart() {
         desocupacao: ["Desocupação", "desocupacao", colors.orange]
     };
 
-    const [name, field, color] = configs[mode];
+    const keys = mode === "todos" ? Object.keys(configs) : [mode];
 
-    drawLineChart("macroChart", [{
-        name,
-        color,
-        values: state.monthly.map(row => number(findValue(row, [field, name])))
-    }], labels);
+    const series = keys.map(key => {
+        const [name, field, color] = configs[key];
+        return {
+            name,
+            color,
+            values: state.monthly.map(row => number(findValue(row, [field, name])))
+        };
+    });
+
+    drawLineChart("macroChart", series, labels);
+}
+
+function titleValues(config) {
+    return state.monthly.map(row =>
+        number(findValue(row, [config.field, ...config.aliases]))
+    );
+}
+
+function selectedTitleKeys() {
+    return Object.keys(titleConfig).filter(key => state.visibleSeries.has(key));
+}
+
+function syncTitleTabs() {
+    document.querySelectorAll("#titleTabs button[data-title]").forEach(button => {
+        const on = state.visibleSeries.has(button.dataset.title);
+        button.classList.toggle("active", on);
+        button.setAttribute("aria-pressed", String(on));
+    });
+
+    const allOn = state.visibleSeries.size === Object.keys(titleConfig).length;
+    const allButton = document.querySelector('#titleTabs [data-action="all"]');
+    allButton.classList.toggle("active", allOn);
+    allButton.setAttribute("aria-pressed", String(allOn));
 }
 
 function renderTitleChart() {
-    const config = titleConfig[state.selectedTitle];
+    syncTitleTabs();
+
     const labels = state.monthly.map(monthValue);
+    const keys = selectedTitleKeys();
+    const bigNumber = $("titleBigNumber");
+    const single = keys.length === 1;
 
-    document.getElementById("titleName").textContent = config.name;
-    document.getElementById("titleDescription").textContent =
-        `Evolução mensal da taxa do ${config.name.toLowerCase()}.`;
+    if (!keys.length) {
+        $("titleName").textContent = "Nenhum título selecionado";
+        $("titleDescription").textContent =
+            "Clique em um ou mais títulos acima (ou em “Comparar todos”) para exibir o gráfico.";
+        bigNumber.style.display = "none";
+    } else if (single) {
+        const config = titleConfig[keys[0]];
+        const values = titleValues(config);
+        const last = [...values].reverse().find(v => v !== null);
 
-    const values = state.monthly.map(row =>
-        number(findValue(row, [config.field, ...config.aliases]))
-    );
+        $("titleName").textContent = config.name;
+        $("titleDescription").textContent =
+            `Evolução mensal da taxa do ${config.name.toLowerCase()}. Clique em outro título para compará-los.`;
+        $("titleLastRate").textContent = last === undefined ? "--" : formatPercent(last);
+        bigNumber.style.display = "";
+    } else {
+        $("titleName").textContent = keys.length === Object.keys(titleConfig).length
+            ? "Comparação dos 4 títulos"
+            : `Comparação de ${keys.length} títulos`;
+        $("titleDescription").textContent =
+            "Taxas mensais no mesmo gráfico. Clique em um título acima para mostrá-lo ou escondê-lo.";
+        bigNumber.style.display = "none";
+    }
 
-    const last = [...values].reverse().find(v => v !== null);
-    document.getElementById("titleLastRate").textContent =
-        last === undefined ? "--" : formatPercent(last);
+    const series = keys.map(key => ({
+        name: single ? titleConfig[key].name : titleConfig[key].name.replace("Tesouro ", ""),
+        color: titleColors[key],
+        values: titleValues(titleConfig[key])
+    }));
 
-    drawLineChart("titleChart", [{
-        name: config.name,
-        color: colors.blue,
-        values
-    }], labels);
+    drawLineChart("titleChart", series, labels);
 }
 
 function renderComparison() {
@@ -680,134 +778,98 @@ function renderComparison() {
     `).join("");
 }
 
-function renderHeatmap() {
-    const container = document.getElementById("heatmap");
-    const lag = document.getElementById("lagSelect").value;
-
-    const filtered = state.correlations.filter(row =>
-        String(findValue(row, ["lag"])) === lag
-    );
-
-    const titles = [...new Set(filtered.map(row => findValue(row, ["titulo"])).filter(Boolean))];
-    const indicators = [...new Set(filtered.map(row => findValue(row, ["indicador"])).filter(Boolean))];
-
-    if (!titles.length || !indicators.length) {
-        container.innerHTML = `<div class="empty">Não há dados para o lag selecionado.</div>`;
-        return;
-    }
-
-    let html = `<div class="heat-grid" style="--cols:${indicators.length + 1}">
-        <div class="heat-corner"></div>
-        ${indicators.map(ind => `<div class="heat-header" title="${ind}">${shortLabel(ind)}</div>`).join("")}`;
-
-    titles.forEach(title => {
-        html += `<div class="heat-title" title="${title}">${shortLabel(title)}</div>`;
-
-        indicators.forEach(indicator => {
-            const row = filtered.find(r =>
-                findValue(r, ["titulo"]) === title &&
-                findValue(r, ["indicador"]) === indicator
-            );
-
-            const r = row ? number(findValue(row, ["r", "correlacao"])) : null;
-            const intensity = r === null ? 0 : Math.min(Math.abs(r), 1);
-            const background = r === null
-                ? "#f3f4f6"
-                : r >= 0
-                    ? `rgba(37, 99, 235, ${0.12 + intensity * 0.70})`
-                    : `rgba(184, 75, 75, ${0.12 + intensity * 0.70})`;
-
-            html += `
-                <div class="heat-cell" style="background:${background}" title="${title} × ${indicator}: ${r === null ? "--" : r.toFixed(3)}">
-                    ${r === null ? "—" : r.toFixed(2)}
-                </div>`;
-        });
-    });
-
-    html += `</div>`;
-    container.innerHTML = html;
-}
-
 function shortLabel(text) {
     const value = String(text);
     if (value.length <= 20) return value;
     return value.slice(0, 18) + "…";
 }
 
-function renderTopCorrelations() {
-    const container = document.getElementById("topCorrelations");
+function filteredCorrelations(titleSelectId) {
+    const title = $(titleSelectId).value;
+    const yVar = $("correlationYSelect").value;
+    const lag = $("correlationLagSelect").value;
 
-    const rows = [...state.correlations]
+    return state.correlations
+        .filter(row =>
+            (title === "todos" || findValue(row, ["titulo"]) === title) &&
+            (yVar === "todos" || findValue(row, ["y"]) === yVar) &&
+            (lag === "todos" || String(lagOf(row)) === lag)
+        )
         .map(row => ({
-            ...row,
-            rNum: number(findValue(row, ["r", "correlacao"])),
-            lag: findValue(row, ["lag"]),
             title: findValue(row, ["titulo"]),
+            yVar: findValue(row, ["y"]),
             indicator: findValue(row, ["indicador"]),
+            lag: lagOf(row),
+            r: number(findValue(row, ["correlacao", "r"])),
             n: findValue(row, ["n"]),
-            sig: findValue(row, ["sig"])
+            sig: String(findValue(row, ["significativa", "sig"])).toLowerCase() === "true"
         }))
-        .filter(row => row.rNum !== null)
-        .sort((a, b) => Math.abs(b.rNum) - Math.abs(a.rNum))
-        .slice(0, 8);
+        .sort((a, b) => Math.abs(b.r ?? 0) - Math.abs(a.r ?? 0));
+}
+
+function renderTopCorrelations() {
+    const container = $("topCorrelations");
+    const rows = filteredCorrelations("topTitleSelect").filter(row => row.r !== null).slice(0, 8);
+
+    if (!rows.length) {
+        container.innerHTML = `<div class="empty">Nenhuma correlação para os filtros selecionados.</div>`;
+        return;
+    }
 
     container.innerHTML = rows.map((row, index) => `
         <div class="correlation-item">
             <div class="rank">${index + 1}</div>
             <div class="corr-info">
                 <strong>${row.title}</strong>
-                <span>${row.indicator} · lag ${row.lag} · n=${row.n}</span>
+                <span>${row.indicator} × ${row.yVar} · lag ${row.lag} · n=${row.n}${row.sig ? " · significativa (5%)" : ""}</span>
             </div>
-            <div class="corr-value ${row.rNum >= 0 ? "positive" : "negative"}">
-                ${row.rNum.toFixed(3)}
+            <div class="corr-value ${row.r >= 0 ? "positive" : "negative"}">
+                ${row.r.toFixed(3)}
             </div>
         </div>
     `).join("");
 }
 
 function renderCorrelationTable() {
-    const tbody = document.getElementById("correlationTable");
-    const titleFilter = document.getElementById("correlationTitleSelect").value;
+    const rows = filteredCorrelations("correlationTitleSelect");
 
-    const rows = state.correlations
-        .filter(row =>
-            titleFilter === "todos" ||
-            findValue(row, ["titulo"]) === titleFilter
-        )
-        .sort((a, b) =>
-            Math.abs(number(findValue(b, ["r", "correlacao"])) ?? 0) -
-            Math.abs(number(findValue(a, ["r", "correlacao"])) ?? 0)
-        );
+    $("correlationTable").innerHTML = rows.length ? rows.map(row => `
+        <tr>
+            <td>${row.title || "--"}</td>
+            <td>${row.indicator || "--"}</td>
+            <td>${row.lag !== "" ? row.lag : "--"}</td>
+            <td class="${row.r !== null && Math.abs(row.r) >= .7 ? "highlight" : ""}">
+                ${row.r === null ? "--" : row.r.toFixed(3)}
+            </td>
+            <td>${row.n || "--"}</td>
+            <td><span class="${row.sig ? "badge yes" : "badge no"}">${row.sig ? "Sim" : "Não"}</span></td>
+        </tr>`).join("")
+        : `<tr><td colspan="6" class="empty">Nenhuma correlação para os filtros selecionados.</td></tr>`;
+}
 
-    tbody.innerHTML = rows.map(row => {
-        const r = number(findValue(row, ["r", "correlacao"]));
-        const sig = String(findValue(row, ["sig"])).toLowerCase() === "true";
-
-        return `
-            <tr>
-                <td>${findValue(row, ["titulo"]) || "--"}</td>
-                <td>${findValue(row, ["indicador"]) || "--"}</td>
-                <td>${findValue(row, ["lag"]) || "--"}</td>
-                <td class="${r !== null && Math.abs(r) >= .7 ? "highlight" : ""}">
-                    ${r === null ? "--" : r.toFixed(3)}
-                </td>
-                <td>${findValue(row, ["n"]) || "--"}</td>
-                <td><span class="${sig ? "badge yes" : "badge no"}">${sig ? "Sim" : "Não"}</span></td>
-            </tr>`;
-    }).join("");
+function renderCorrelations() {
+    renderTopCorrelations();
+    renderCorrelationTable();
 }
 
 function renderEvents() {
-    const filter = document.getElementById("eventSelect").value;
+    const dateFilter = $("eventSelect").value;
+    const titleFilter = $("eventTitleSelect").value;
+    const pu = row => number(findValue(row, ["var_pu_pct"])) ?? 0;
 
     const rows = state.events.filter(row =>
-        filter === "todos" ||
-        findValue(row, ["data_decisao", "data"]) === filter
+        (dateFilter === "todos" || eventDate(row) === dateFilter) &&
+        (titleFilter === "todos" || findValue(row, ["titulo"]) === titleFilter)
     );
 
-    document.getElementById("eventTable").innerHTML = rows.map(row => `
+    const tableTitle = $("eventTableTitleSelect").value;
+    const tableRows = state.events.filter(row =>
+        tableTitle === "todos" || findValue(row, ["titulo"]) === tableTitle
+    );
+
+    $("eventTable").innerHTML = tableRows.map(row => `
         <tr>
-            <td>${findValue(row, ["data_decisao", "data"]) || "--"}</td>
+            <td>${eventDate(row) || "--"}</td>
             <td>${findValue(row, ["titulo"]) || "--"}</td>
             <td>${formatPercent(findValue(row, ["taxa_antes"]))}</td>
             <td>${formatPercent(findValue(row, ["taxa_depois"]))}</td>
@@ -816,43 +878,107 @@ function renderEvents() {
         </tr>
     `).join("");
 
-    const grouped = {};
-    rows.forEach(row => {
-        const title = findValue(row, ["titulo"]);
-        grouped[title] = number(findValue(row, ["var_pu_pct"])) ?? 0;
-    });
+    let items;
+    let subtitle;
 
-    drawBarChart(
-        "eventChart",
-        Object.entries(grouped).map(([label, value]) => ({ label, value }))
-    );
+    if (dateFilter === "todos" && titleFilter !== "todos") {
+        items = rows.map(row => ({ label: eventDate(row), value: pu(row) }));
+        subtitle = `Variação do preço do ${titleFilter} em cada decisão da Selic.`;
+    } else if (dateFilter === "todos") {
+        const groups = {};
+        rows.forEach(row => {
+            const title = findValue(row, ["titulo"]);
+            (groups[title] = groups[title] || []).push(pu(row));
+        });
+        items = Object.entries(groups).map(([label, list]) => ({
+            label,
+            value: list.reduce((a, b) => a + b, 0) / list.length
+        }));
+        subtitle = "Média das variações de preço por título, considerando todas as decisões.";
+    } else {
+        items = rows.map(row => ({ label: findValue(row, ["titulo"]), value: pu(row) }));
+        subtitle = `Variação do preço dos títulos após a decisão de ${dateFilter}.`;
+    }
+
+    $("eventSubtitle").textContent = subtitle;
+    drawBarChart("eventChart", items);
+}
+
+function addOptions(select, values, labelFn = v => v) {
+    values.forEach(value => {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = labelFn(value);
+        select.appendChild(option);
+    });
 }
 
 function populateSelects() {
-    const titleSelect = document.getElementById("correlationTitleSelect");
-    const titles = [...new Set(
-        state.correlations.map(row => findValue(row, ["titulo"])).filter(Boolean)
-    )];
+    const unique = values => [...new Set(values.filter(v => v !== "" && v != null))];
 
-    titles.forEach(title => {
-        const option = document.createElement("option");
-        option.value = title;
-        option.textContent = title;
-        titleSelect.appendChild(option);
-    });
+    const corrTitles = unique(state.correlations.map(row => findValue(row, ["titulo"])));
+    addOptions($("topTitleSelect"), corrTitles);
+    addOptions($("correlationTitleSelect"), corrTitles);
 
-    const eventSelect = document.getElementById("eventSelect");
-    const dates = [...new Set(
-        state.events.map(row => findValue(row, ["data_decisao", "data"])).filter(Boolean)
-    )];
+    const yVars = unique(state.correlations.map(row => findValue(row, ["y"])));
+    addOptions($("correlationYSelect"), yVars);
+    if (yVars.length > 1) {
+        const all = document.createElement("option");
+        all.value = "todos";
+        all.textContent = "Todas";
+        $("correlationYSelect").appendChild(all);
+    }
+    if (yVars.includes("Δ Preço (%)")) $("correlationYSelect").value = "Δ Preço (%)";
 
-    dates.forEach(date => {
-        const option = document.createElement("option");
-        option.value = date;
-        option.textContent = date;
-        eventSelect.appendChild(option);
-    });
+    addOptions($("correlationLagSelect"),
+        unique(state.correlations.map(lagOf)).sort((a, b) => Number(a) - Number(b)),
+        lag => `Lag ${lag}`);
+
+    const eventTitles = unique(state.events.map(row => findValue(row, ["titulo"])));
+    addOptions($("eventTitleSelect"), eventTitles);
+    addOptions($("eventTableTitleSelect"), eventTitles);
+    addOptions($("eventSelect"), unique(state.events.map(eventDate)));
 }
+
+function renderPeriods() {
+    const months = state.monthly.map(monthValue).filter(Boolean);
+
+    const texto = months.length
+        ? `${months[0]} a ${months[months.length - 1]} · ${months.length} meses`
+        : "--";
+
+    $("periodsInfo").textContent = `Painel mensal ${texto}`;
+
+    $("status").textContent = months.length
+        ? `${months.length} períodos carregados (${months[0]} a ${months[months.length - 1]})`
+        : "Sem dados";
+}
+
+// function renderPeriods() {
+//     const months = state.monthly.map(monthValue).filter(Boolean);
+//     $("periodMonthlyRange").textContent = months.length
+//         ? `${months[0]} a ${months[months.length - 1]} · ${months.length} meses`
+//         : "--";
+//     $("periodMonthlyChips").innerHTML =
+//         months.map(m => `<span class="chip">${m}</span>`).join("");
+
+//     const dates = [...new Set(state.events.map(eventDate).filter(Boolean))].sort();
+//     $("periodEventsRange").textContent = dates.length
+//         ? `${dates.length} decisões · ${dates[0]} a ${dates[dates.length - 1]}`
+//         : "--";
+//     $("periodEventsChips").innerHTML =
+//         dates.map(d => `<span class="chip">${d}</span>`).join("");
+
+//     const lags = [...new Set(state.correlations.map(lagOf).filter(v => v !== ""))]
+//         .map(Number).sort((a, b) => a - b);
+//     $("periodLags").textContent = lags.length
+//         ? `lag ${lags[0]} a ${lags[lags.length - 1]} (meses de atraso do indicador)`
+//         : "--";
+
+//     $("status").textContent = months.length
+//         ? `${months.length} períodos carregados (${months[0]} a ${months[months.length - 1]})`
+//         : "Sem dados";
+// }
 
 function renderMonthlyTable() {
     document.getElementById("monthlyTable").innerHTML =
@@ -902,19 +1028,15 @@ async function init() {
         state.correlations = correlations;
         state.events = events;
 
+        populateSelects();
+        renderPeriods();
         renderCards();
         renderMacroChart();
         renderTitleChart();
         renderComparison();
-        renderHeatmap();
-        renderTopCorrelations();
-        populateSelects();
-        renderCorrelationTable();
+        renderCorrelations();
         renderEvents();
         renderMonthlyTable();
-
-        document.getElementById("status").textContent =
-            `${monthly.length} períodos carregados`;
     } catch (error) {
         console.error(error);
         document.getElementById("status").textContent = "Erro ao carregar";
@@ -928,18 +1050,30 @@ async function init() {
 }
 
 document.getElementById("macroSelect").addEventListener("change", renderMacroChart);
-document.getElementById("lagSelect").addEventListener("change", renderHeatmap);
-document.getElementById("lagSelect").addEventListener("change", renderTopCorrelations);
-document.getElementById("correlationTitleSelect").addEventListener("change", renderCorrelationTable);
-document.getElementById("eventSelect").addEventListener("change", renderEvents);
+["correlationYSelect", "correlationLagSelect"].forEach(id =>
+    $(id).addEventListener("change", renderCorrelations));
+$("topTitleSelect").addEventListener("change", renderTopCorrelations);
+$("correlationTitleSelect").addEventListener("change", renderCorrelationTable);
+["eventSelect", "eventTitleSelect", "eventTableTitleSelect"].forEach(id =>
+    $(id).addEventListener("change", renderEvents));
 
-document.querySelectorAll("#titleTabs button").forEach(button => {
-    button.addEventListener("click", () => {
-        document.querySelectorAll("#titleTabs button").forEach(b => b.classList.remove("active"));
-        button.classList.add("active");
-        state.selectedTitle = button.dataset.title;
-        renderTitleChart();
-    });
+$("titleTabs").addEventListener("click", event => {
+    const button = event.target.closest("button");
+    if (!button) return;
+
+    const keys = Object.keys(titleConfig);
+
+    if (button.dataset.action === "all") {
+        keys.forEach(key => state.visibleSeries.add(key));
+    } else if (button.dataset.action === "clear") {
+        state.visibleSeries.clear();
+    } else if (button.dataset.title) {
+        const key = button.dataset.title;
+        if (state.visibleSeries.has(key)) state.visibleSeries.delete(key);
+        else state.visibleSeries.add(key);
+    }
+
+    renderTitleChart();
 });
 
 window.addEventListener("resize", () => {
@@ -949,6 +1083,56 @@ window.addEventListener("resize", () => {
     renderEvents();
 });
 
+const HELP = {
+    visao: "Resumo dos últimos valores disponíveis no painel mensal. Cada cartão mostra o valor do <strong>último mês carregado</strong> (veja o mês abaixo do número).",
+    periodos: "Mostra exatamente quais dados foram lidos. <strong>Painel mensal</strong>: um registro por mês (valores de fim de mês). <br> <strong>Decisões da Selic</strong>: datas em que a meta da Selic mudou, usadas no estudo de caso. <br> <strong>Defasagens</strong>: atrasos, em meses, testados nas correlações.",
+    macro: "Evolução mensal de três indicadores: <strong>Selic</strong> (taxa básica de juros no fim do mês), <strong>IPCA mensal</strong> (inflação do mês) e <strong>desocupação</strong> (% da força de trabalho sem emprego). Use o seletor para escolher um deles ou <strong>Todos os indicadores</strong> para ver os três no mesmo gráfico (como o IPCA mensal é bem menor que a Selic, a linha dele fica achatada nessa visão).",
+    titulos: "Taxas dos quatro títulos do Tesouro Direto usados na análise. A taxa de cada mês é a taxa de venda do último dia disponível do mês. Por padrão os quatro aparecem juntos; clique em um título para escondê-lo ou mostrá-lo de novo.",
+    tituloSel: "Os botões funcionam como caixas de marcar: <strong>clique em um título para mostrá-lo ou escondê-lo</strong> e compare quantos quiser no mesmo gráfico. <strong>Comparar todos</strong> marca os quatro; <strong>Limpar seleção</strong> desmarca todos, para você escolher um por vez. A taxa do Tesouro Selic é um prêmio sobre a Selic (fica perto de 0%), então sua linha parece achatada perto dos outros — desmarque-o para ver os demais com mais detalhe.",
+    comparacao: "Taxas dos quatro títulos no <strong>último mês carregado</strong>, lado a lado.",
+    resumo: "Os mesmos valores do gráfico ao lado, em formato de lista.",
+    correlacoes: "Testa se os indicadores macroeconômicos ajudam a explicar o movimento dos títulos, usando a <strong>correlação de Pearson (r)</strong>, de -1 a +1: perto de 0 = sem relação linear; perto de +1 = andam juntos; perto de -1 = andam em sentidos opostos.",
+    lag: "<strong>Defasagem (lag)</strong> é o atraso do indicador: no lag 2, o indicador de 2 meses antes é comparado com a variação do título no mês. Serve para ver se o mercado reage aos indicadores com atraso.",
+    top: "As combinações com maior valor absoluto de r, respeitando o filtro de título deste painel e os filtros de variável e lag acima. A variável do título pode ser a <strong>variação do preço (%)</strong> ou a <strong>variação da taxa (p.p.)</strong>: preço e taxa costumam se mover em sentidos opostos. Com poucos meses (n pequeno), trate os resultados como indícios.",
+    tabela: "Todas as combinações testadas. Use o filtro de título no canto do painel (e os filtros de variável e lag acima da lista). <strong>n</strong> é o número de meses usados (diminui com o lag, pois a série é deslocada). <strong>Significativa</strong> indica que |r| passou do valor crítico a 5% para aquele n.",
+    eventos: "Compara o comportamento dos títulos <strong>15 dias antes</strong> e <strong>15 dias depois</strong> de cada data em que a meta da Selic mudou. Use os filtros para escolher um título e/ou uma decisão.",
+    eventosChart: "Variação percentual do <strong>preço unitário (PU)</strong>: média dos 15 dias depois da decisão em relação à média dos 15 dias antes. Positivo = o título se valorizou. Com todas as decisões, mostra a média por título; com um título, mostra cada decisão.",
+    eventosTabela: "Tabela com todas as decisões; use o filtro de título no canto do painel. <strong>Taxa antes/depois</strong>: média da taxa de venda em cada janela de 15 dias. <strong>Var. taxa (p.p.)</strong> = depois − antes. <strong>Var. PU (%)</strong> é a mesma variação de preço do gráfico.",
+    dados: "Base mensal consolidada que alimenta os gráficos e cartões: indicadores macroeconômicos e taxa de cada título por mês."
+};
+
+function setupHelp() {
+    document.querySelectorAll("[data-help]").forEach(el => {
+        const key = el.dataset.help;
+        if (!HELP[key]) return;
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "help-btn";
+        button.textContent = "?";
+        button.title = "O que é isso?";
+        button.setAttribute("aria-label", "O que é isso?");
+        button.setAttribute("aria-expanded", "false");
+        button.setAttribute("aria-controls", `help-${key}`);
+
+        const box = document.createElement("div");
+        box.className = "help-box";
+        box.id = `help-${key}`;
+        box.hidden = true;
+        box.innerHTML = HELP[key];
+
+        el.appendChild(button);
+        (el.closest(".panel-title, .section-heading") || el).insertAdjacentElement("afterend", box);
+
+        button.addEventListener("click", () => {
+            box.hidden = !box.hidden;
+            button.setAttribute("aria-expanded", String(!box.hidden));
+            button.classList.toggle("open", !box.hidden);
+        });
+    });
+}
+
+setupHelp();
 init();
 </script>
 
